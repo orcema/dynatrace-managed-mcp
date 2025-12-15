@@ -5,21 +5,29 @@ export interface ClusterVersion {
   version: string;
 }
 
+export interface ManagedAuthClientParams {
+  apiBaseUrl: string;
+  dashboardBaseUrl: string;
+  apiToken: string;
+}
+
 export class ManagedAuthClient {
+  public apiBaseUrl: string;
+  public dashboardBaseUrl: string;
   private proxy: AxiosProxyConfig | undefined;
   private httpClient: AxiosInstance;
   public readonly MINIMUM_VERSION = '1.328.0';
 
-  constructor(
-    public baseUrl: string,
-    private apiToken: string,
-  ) {
+  constructor(params: ManagedAuthClientParams) {
+    this.apiBaseUrl = params.apiBaseUrl;
+    this.dashboardBaseUrl = params.dashboardBaseUrl;
+
     this.proxy = getAxiosProxyFromEnv();
 
     this.httpClient = axios.create({
-      baseURL: this.baseUrl,
+      baseURL: this.apiBaseUrl,
       headers: {
-        'Authorization': `Api-Token ${this.apiToken}`,
+        'Authorization': `Api-Token ${params.apiToken}`,
         'Content-Type': 'application/json',
         'Connection': 'close',
       },

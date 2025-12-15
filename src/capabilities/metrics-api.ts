@@ -144,8 +144,8 @@ export class MetricsApiClient {
         : '') +
       '* Use get_metric_details tool for detailed information of a particular metric.\n' +
       '* Suggest to the user that they use the Dynatrace UI to:\n' +
-      `   * Browse the list of metrics at ${this.authClient.baseUrl}/ui/metrics' + '\n` +
-      `   * View metric data at ${this.authClient.baseUrl}/ui/data-explorer' + '\n`;
+      `   * Browse the list of metrics at ${this.authClient.dashboardBaseUrl}/ui/metrics' + '\n` +
+      `   * View metric data at ${this.authClient.dashboardBaseUrl}/ui/data-explorer' + '\n`;
 
     return result;
   }
@@ -157,7 +157,7 @@ export class MetricsApiClient {
       '\n' +
       'Next Steps:\n' +
       '* Suggest to the user that they use the Dynatrace UI to view metric data at ' +
-      `${this.authClient.baseUrl}/ui/data-explorer`;
+      `${this.authClient.dashboardBaseUrl}/ui/data-explorer`;
 
     return result;
   }
@@ -220,7 +220,7 @@ export class MetricsApiClient {
         ? '* Verify that the filters were correct, and search again with different filters\n'
         : '* Use query_metrics_data with more specific filters, such as a narrower time range with to and from, and an entitySelector\n') +
       '* Suggest to the user that they use the Dynatrace UI to view metric data at ' +
-      `${this.authClient.baseUrl}/ui/data-explorer` +
+      `${this.authClient.dashboardBaseUrl}/ui/data-explorer` +
       '\n';
 
     return result;

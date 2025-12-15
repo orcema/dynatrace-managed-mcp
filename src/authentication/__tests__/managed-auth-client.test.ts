@@ -13,7 +13,11 @@ describe('ManagedAuthClient', () => {
     mockCreate.mockReturnValue({
       get: jest.fn(),
     });
-    client = new ManagedAuthClient('https://managed.test.com', 'test-token');
+    client = new ManagedAuthClient({
+      apiBaseUrl: 'https://managed.test.com',
+      dashboardBaseUrl: 'https://managed-dashboard.test.com',
+      apiToken: 'test-token',
+    });
   });
 
   afterEach(() => {
@@ -42,7 +46,11 @@ describe('ManagedAuthClient', () => {
         .mockRejectedValueOnce(new Error('Cluster version not available'))
         .mockResolvedValueOnce({ status: 200 });
       mockCreate.mockReturnValue({ get: mockGet });
-      client = new ManagedAuthClient('https://managed.test.com', 'test-token');
+      client = new ManagedAuthClient({
+        apiBaseUrl: 'https://managed.test.com',
+        dashboardBaseUrl: 'https://managed-dashboard.test.com',
+        apiToken: 'test-token',
+      });
 
       const result = await client.validateConnection();
 

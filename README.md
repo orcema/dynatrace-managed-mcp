@@ -35,8 +35,11 @@ For more details, please refer to the [configuration section below](#configurati
 
 You need to configure the connection to your Dynatrace Managed environment:
 
-- `DT_MANAGED_ENVIRONMENT` (string, e.g., `https://managed.company.com:9999/e/e0a90c2f-89ab-43c7-9ff7-ec75449c1aba`) - URL to your Managed cluster
-- `DT_MANAGED_API_TOKEN` (string) - API token with required scopes (see [Authentication](#authentication))
+- `DT_MANAGED_ENVIRONMENT`: id of the managed environment, used for constructing URL for API and dashboards (e.g. of the form `01234567-89ab-cdef-abcd-ef0123456789`)
+- `DT_API_ENDPOINT_URL`: base url for Dynatrace Managed API, to which the environment id will be appended (e.g. `https://abc123.dynatrace-managed.com:9999/e/`)
+- `DT_DYNATRACE_URL`: base url for Dynatrace Managed dashboard, to which the environment id will be appended (e.g. `https://dmz123.dynatrace-managed.com/e/`).
+  If not specified, will default to use the same value as `DT_API_ENDPOINT_URL`.
+- `DT_MANAGED_API_TOKEN`: API token with required scopes (see [Authentication](#authentication))
 
 Once configured, you can start using [example prompts](#Example-Prompts) like `Get all details of the Dynatrace entity 'my-service'`
 or `What problems has Dynatrace identified? Give details of the first problem.`.
@@ -116,8 +119,10 @@ This only works if the config is stored in the current workspaces, e.g., `<your-
       "command": "npx",
       "args": ["-y", "@dynatrace-oss/dynatrace-managed-mcp-server@latest"],
       "env": {
-        "DT_MANAGED_ENVIRONMENT": "https://managed.company.com",
-        "DT_MANAGED_API_TOKEN": "your-api-token"
+        "DT_MANAGED_ENVIRONMENT": "01234567-89ab-cdef-abcd-ef0123456789",
+        "DT_API_ENDPOINT_URL": "https://abc123.dynatrace-managed.example.com:9999/e/",
+        "DT_DYNATRACE_URL": "https://dmz123.dynatrace-managed.example.com/e/",
+        "DT_MANAGED_API_TOKEN": "dt0s16.SAMPLE.abcd1234"
       }
     }
   }
@@ -133,8 +138,10 @@ This only works if the config is stored in the current workspaces, e.g., `<your-
       "command": "npx",
       "args": ["-y", "@dynatrace-oss/dynatrace-managed-mcp-server@latest"],
       "env": {
-        "DT_MANAGED_ENVIRONMENT": "https://managed.company.com",
-        "DT_MANAGED_API_TOKEN": "your-api-token"
+        "DT_MANAGED_ENVIRONMENT": "01234567-89ab-cdef-abcd-ef0123456789",
+        "DT_API_ENDPOINT_URL": "https://abc123.dynatrace-managed.example.com:9999/e/",
+        "DT_DYNATRACE_URL": "https://dmz123.dynatrace-managed.example.com/e/",
+        "DT_MANAGED_API_TOKEN": "dt0s16.SAMPLE.abcd1234"
       }
     }
   }
@@ -152,8 +159,10 @@ This only works if the config is stored in the current workspaces, e.g., `<your-
       "command": "npx",
       "args": ["-y", "@dynatrace-oss/dynatrace-managed-mcp-server@latest"],
       "env": {
-        "DT_MANAGED_ENVIRONMENT": "https://managed.company.com",
-        "DT_MANAGED_API_TOKEN": "your-api-token"
+        "DT_MANAGED_ENVIRONMENT": "01234567-89ab-cdef-abcd-ef0123456789",
+        "DT_API_ENDPOINT_URL": "https://abc123.dynatrace-managed.example.com:9999/e/",
+        "DT_DYNATRACE_URL": "https://dmz123.dynatrace-managed.example.com/e/",
+        "DT_MANAGED_API_TOKEN": "dt0s16.SAMPLE.abcd1234"
       }
     }
   }
@@ -170,8 +179,10 @@ Using `gemini` CLI directly (recommended):
 
 ```bash
 gemini extensions install https://github.com/dynatrace-oss/dynatrace-managed-mcp
-export DT_MANAGED_ENVIRONMENT="https://managed.company.com"
-export DT_MANAGED_API_TOKEN="your-api-token"
+export DT_MANAGED_ENVIRONMENT="01234567-89ab-cdef-abcd-ef0123456789"
+export DT_API_ENDPOINT_URL="https://abc123.dynatrace-managed.example.com:9999/e/"
+export DT_DYNATRACE_URL="https://dmz123.dynatrace-managed.example.com/e/"
+export DT_MANAGED_API_TOKEN="dt0s16.SAMPLE.abcd1234"
 ```
 
 and verify that the server is running via
@@ -189,8 +200,10 @@ Or manually in your `~/.gemini/settings.json` or `.gemini/settings.json`:
       "command": "npx",
       "args": ["@dynatrace-oss/dynatrace-managed-mcp-server@latest"],
       "env": {
-        "DT_MANAGED_ENVIRONMENT": "https://managed.company.com",
-        "DT_MANAGED_API_TOKEN": "your-api-token"
+        "DT_MANAGED_ENVIRONMENT": "01234567-89ab-cdef-abcd-ef0123456789",
+        "DT_API_ENDPOINT_URL": "https://abc123.dynatrace-managed.example.com:9999/e/",
+        "DT_DYNATRACE_URL": "https://dmz123.dynatrace-managed.example.com/e/",
+        "DT_MANAGED_API_TOKEN": "dt0s16.SAMPLE.abcd1234"
       },
       "timeout": 30000,
       "trust": false
@@ -291,11 +304,14 @@ AWS Lambda Functions:
 
 ## Environment Variables
 
-- `DT_MANAGED_ENVIRONMENT` - URL to your Managed cluster (e.g., `https://managed.company.com:9999/e/e0a90c2f-89ab-43c7-9ff7-ec75449c1aba`)
-- `DT_MANAGED_API_TOKEN` - API token with required scopes (see [Authentication](#authentication))
-- `LOG_LEVEL` - Log level, writing to dynatrace-managed-mcp.log in the current working directory (e.g. debug, info, warning, error)
-- `HTTP_PROXY` - HTTP Proxy for corporate environments, to route traffic through (e.g. http://proxy.company.com:8080)
-- `HTTPS_PROXY` - HTTPS Proxy for corporate environments, to route traffic through (e.g. https://proxy.company.com:8080)
+- `DT_MANAGED_ENVIRONMENT` (required): id of the managed environment, used for constructing URL for API and dashboards (e.g. of the form `01234567-89ab-cdef-abcd-ef0123456789`)
+- `DT_API_ENDPOINT_URL` (required): base url for Dynatrace Managed API, to which the environment id will be appended (e.g. `https://abc123.dynatrace-managed.com:9999/e/`)
+- `DT_DYNATRACE_URL` (optional): base url for Dynatrace Managed dashboard, to which the environment id will be appended (e.g. `https://dmz123.dynatrace-managed.com/e/`).
+  If not specified, will default to use the same value as `DT_API_ENDPOINT_URL`.
+- `DT_MANAGED_API_TOKEN` (required): API token with required scopes (see [Authentication](#authentication))
+- `LOG_LEVEL` (optional): Log level, writing to dynatrace-managed-mcp.log in the current working directory (e.g. debug, info, warning, error)
+- `HTTP_PROXY` (optional): HTTP Proxy for corporate environments, to route traffic through (e.g. http://proxy.company.com:8080)
+- `HTTPS_PROXY` (optional): HTTPS Proxy for corporate environments, to route traffic through (e.g. https://proxy.company.com:8080)
 
 **Proxy Configuration**
 

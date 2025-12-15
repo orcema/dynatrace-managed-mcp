@@ -135,7 +135,7 @@ export class ProblemsApiClient {
       (isLimited ? '* Use more restrictive filters, such as a more specific entitySelector.\n' : '') +
       (numProblems > 1 ? '* Use sort (e.g. with "+status" for open problems first).\n' : '') +
       '* Suggest to the user that they view the problems in the Dynatrace UI at ' +
-      `${this.authClient.baseUrl}/ui/problems` +
+      `${this.authClient.dashboardBaseUrl}/ui/problems` +
       '\n' +
       '* If the user is interested in a specific problem, use the get_problem_details tool. ' +
       'Use the problemId (UUID) for detailed analysis.\n';
@@ -153,7 +153,7 @@ export class ProblemsApiClient {
     ("   * list_events tool, using the affected entity's entityId in the entitySelector.\n");
     ('   * query_logs tool, for a narrow time range of the problem, searching for logs about that entity.\n');
     '* Suggest to the user that they view the problem in the Dynatrace UI ' +
-      `${this.authClient.baseUrl}/#problems/problemdetails;pid=<problemId>, using the problemId in the URL` +
+      `${this.authClient.dashboardBaseUrl}/#problems/problemdetails;pid=<problemId>, using the problemId in the URL` +
       '\n';
 
     return result;
