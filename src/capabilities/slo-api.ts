@@ -156,7 +156,7 @@ export class SloApiClient {
       (numSLOs > 1 ? '* Use sort (e.g. with "+name" for ascending alphabetical order).\n' : '') +
       '* If the user is interested in a specific SLO, use the get_slo_details tool. Use the SLO id for this.\n' +
       '* Suggest to the user that they view the SLOs in the Dynatrace UI at ' +
-      `${this.authClient.baseUrl}/ui/slo` +
+      `${this.authClient.dashboardBaseUrl}/ui/slo` +
       '\n';
 
     return result;
@@ -169,7 +169,7 @@ export class SloApiClient {
       '\n' +
       'Next Steps:\n' +
       '* Suggest to the user that they view the SLO in the Dynatrace UI at ' +
-      `${this.authClient.baseUrl}/ui/slo/<id>, using the SLO id in the URL` +
+      `${this.authClient.dashboardBaseUrl}/ui/slo/<id>, using the SLO id in the URL` +
       '\n';
 
     return result;

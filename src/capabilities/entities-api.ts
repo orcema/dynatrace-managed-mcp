@@ -184,7 +184,7 @@ export class EntitiesApiClient {
       '* If this has returned the entities that the user wanted, consider using the same entitySelector in subsequent calls such as to list_problems tool if that has not already been done.\n' +
       'Use the entityId (UUID) for detailed analysis\n' +
       '* Suggest to the user that they view the entities in the Dynatrace UI at ' +
-      `${this.authClient.baseUrl}/` +
+      `${this.authClient.dashboardBaseUrl}/` +
       '\n';
 
     return result;
@@ -240,7 +240,7 @@ export class EntitiesApiClient {
       'Next Steps:\n' +
       '* To get details of a particular entity type, use the get_entity_type_details tool, passing in the type name\n' +
       '* For subsequent user queries, consider using the entity type in the the entitySelector parameter like "type(HOST)" or "type(SERVICE)".\n';
-    '* Suggest to the user that they look in the Dynatrace UI at ' + `${this.authClient.baseUrl}/` + '\n';
+    '* Suggest to the user that they look in the Dynatrace UI at ' + `${this.authClient.dashboardBaseUrl}/` + '\n';
 
     return result;
   }
@@ -264,7 +264,7 @@ export class EntitiesApiClient {
       'Next Steps:\n' +
       '* Use list_problems or list_events tools with the same entitySelector to check for relates issues and events.\n' +
       '* Suggest to the user that they view the entity in the Dynatrace UI at ' +
-      `${this.authClient.baseUrl}/ui/entity/<entityId>, using the entityId in the URL` +
+      `${this.authClient.dashboardBaseUrl}/ui/entity/<entityId>, using the entityId in the URL` +
       '\n';
 
     return result;
@@ -295,7 +295,7 @@ export class EntitiesApiClient {
       '* Use get_entity_details tool to get more details of this entity, or of entities that it has a relationship to/from.\n' +
       '* Use list_problems or list_events tools with the same entitySelector by entityId to check for related issues and events.\n' +
       '* Suggest to the user that they view the entity in the Dynatrace UI at ' +
-      `${this.authClient.baseUrl}/ui/entity/<entityId>, using the entityId in the URL` +
+      `${this.authClient.dashboardBaseUrl}/ui/entity/<entityId>, using the entityId in the URL` +
       '\n';
 
     return result;

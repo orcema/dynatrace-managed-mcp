@@ -153,8 +153,8 @@ export class SecurityApiClient {
       (numProblems > 1 ? '* Use sort (e.g. with "-riskAssessment.riskScore" for highest risk score first).\n' : '') +
       '* If the user is interested in a specific vulnerability, use the get_security_problem_details tool. Use the securityProblemId for this.\n' +
       '* Suggest to the user that they view the security vulnerabilties in the Dynatrace UI at ' +
-      `${this.authClient.baseUrl}/ui/security/overview for an overview,` +
-      `or ${this.authClient.baseUrl}/ui/security/vulnerabilities for a list of third-party vulnerabilties` +
+      `${this.authClient.dashboardBaseUrl}/ui/security/overview for an overview,` +
+      `or ${this.authClient.dashboardBaseUrl}/ui/security/vulnerabilities for a list of third-party vulnerabilties` +
       '\n';
 
     return result;
@@ -168,7 +168,7 @@ export class SecurityApiClient {
       'Next Steps:\n' +
       '* If there are affectedEntities, suggest to the user that they could get further information about those entities with get_entity_detais tool, using the entityId.\n' +
       '* Suggest to the user that they view the security vulnerability in the Dynatrace UI ' +
-      `${this.authClient.baseUrl}/ui/security/vulnerabilities/<securityProblemId>, using the securityProblemId in the URL\n`;
+      `${this.authClient.dashboardBaseUrl}/ui/security/vulnerabilities/<securityProblemId>, using the securityProblemId in the URL\n`;
 
     return result;
   }

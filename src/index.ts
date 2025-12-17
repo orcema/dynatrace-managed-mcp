@@ -52,10 +52,14 @@ const main = async () => {
     process.exit(1);
   }
 
-  const { environment, apiToken } = managedConfig;
+  const { environmentId, apiUrl, dashboardUrl, apiToken } = managedConfig;
 
   // Initialize Managed authentication client
-  const authClient = new ManagedAuthClient(environment, apiToken);
+  const authClient = new ManagedAuthClient({
+    apiBaseUrl: apiUrl,
+    dashboardBaseUrl: dashboardUrl,
+    apiToken: apiToken,
+  });
 
   // Initialize API clients
   const metricsClient = new MetricsApiClient(authClient);
@@ -187,7 +191,7 @@ Never run queries that could return very large amounts of data, or that could be
   );
 
   // Test connection to Managed cluster
-  logger.info(`Testing connection to Dynatrace Managed cluster: ${environment}...`);
+  logger.info(`Testing connection to Dynatrace Managed cluster: ${apiUrl}...`);
 
   try {
     const isConnected = await authClient.validateConnection();
@@ -206,7 +210,7 @@ Never run queries that could return very large amounts of data, or that could be
       );
     }
   } catch (error: any) {
-    logger.error(`Failed to connect to Managed cluster ${environment}: ${error.message}`);
+    logger.error(`Failed to connect to Managed cluster ${apiUrl}: ${error.message}`);
     logger.error('Please verify:');
     logger.error('1. DT_MANAGED_ENVIRONMENT URL is correct');
     logger.error(`2. DT_MANAGED_API_TOKEN has required scopes: ${MANAGED_API_SCOPES.join(', ')}`);
@@ -298,7 +302,8 @@ Never run queries that could return very large amounts of data, or that could be
       const isValidVersion = authClient.validateMinimumVersion(clusterVersion);
 
       let resp = `Dynatrace Managed Cluster Information:\n`;
-      resp += `- URL: ${environment}\n`;
+      resp += `- API URL: ${apiUrl}\n`;
+      resp += `- Dashboard URL: ${dashboardUrl}\n`;
       resp += `- Version: ${clusterVersion.version}\n`;
       resp += `- Minimum Version Check: ${isValidVersion ? 'PASSED' : 'WARNING - Version may not be fully compatible and may not support all features'}\n`;
       resp += `- Available API Scopes: ${MANAGED_API_SCOPES.join(', ')}\n`;

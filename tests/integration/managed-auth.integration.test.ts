@@ -6,7 +6,7 @@ import { config } from 'dotenv';
 config();
 
 let skip = false;
-if (!process.env.DT_MANAGED_ENVIRONMENT || !process.env.DT_MANAGED_API_TOKEN) {
+if (!process.env.DT_MANAGED_ENVIRONMENT || !process.env.DT_API_ENDPOINT_URL || !process.env.DT_MANAGED_API_TOKEN) {
   console.log('Skipping integration tests - environment not configured');
   skip = true;
 }
@@ -16,7 +16,11 @@ if (!process.env.DT_MANAGED_ENVIRONMENT || !process.env.DT_MANAGED_API_TOKEN) {
 
   beforeAll(() => {
     const config = getManagedEnvironmentConfig();
-    client = new ManagedAuthClient(config.environment, config.apiToken);
+    client = new ManagedAuthClient({
+      apiBaseUrl: config.apiUrl,
+      dashboardBaseUrl: config.dashboardUrl,
+      apiToken: config.apiToken,
+    });
   });
 
   afterAll(async () => {

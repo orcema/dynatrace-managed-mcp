@@ -128,7 +128,7 @@ export class EventsApiClient {
         ? '* If the user is interested in a specific event, use the get_event_details tool. Use the event id for this.\n '
         : '') +
       '* Suggest to the user that they use the Dynatrace UI to view events at ' +
-      `${this.authClient.baseUrl}/ by navigating to the relevant entity\n` +
+      `${this.authClient.dashboardBaseUrl}/ by navigating to the relevant entity\n` +
       '* Use list_problems to see what problems Dynatrace knows of, if not already done so.\n';
 
     return result;
@@ -141,7 +141,7 @@ export class EventsApiClient {
       '\n' +
       'Next Steps:\n' +
       '* Suggest to the user that they explore this further in the Dynatrace UI at ' +
-      `${this.authClient.baseUrl}/` +
+      `${this.authClient.dashboardBaseUrl}/` +
       '\n' +
       '* Use list_problems to see what problems Dynatrace knows of, if not already done so.\n';
 

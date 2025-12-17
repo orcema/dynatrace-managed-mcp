@@ -104,7 +104,7 @@ export class LogsApiClient {
         : '') +
       (numLogs > 1 ? '* Use sort (e.g. with "-timestamp" for newest logs first).\n' : '') +
       '* Suggest to the user that they use the Dynatrace UI to view metric data at ' +
-      `${this.authClient.baseUrl}/ui/log-monitoring` +
+      `${this.authClient.dashboardBaseUrl}/ui/log-monitoring` +
       '\n' +
       '* Use list_problems to see what problems Dynatrace knows of, if not already done so\n';
 

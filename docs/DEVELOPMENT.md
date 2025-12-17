@@ -15,7 +15,7 @@ To get started, run:
 
 ```bash
 npm install
-npm run buld
+npm run build
 npm run test
 ```
 
@@ -90,8 +90,10 @@ Configure your preferred AI Assistant with an mcp.json file like that below:
       "command": "npx",
       "args": ["--watch", "/path/to/repos/dynatrace-oss/dynatrace-manage-mcp/dist/index.js"],
       "env": {
-        "DT_MANAGED_ENVIRONMENT": "https://yourdomain.com:9999/e/01234546-789a-bcde-f012-3456789abcde",
-        "DT_MANAGED_API_TOKEN": "dt0123.ABCDEFGHIJKLMNOPQRSTUVWX.YZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOP",
+        "DT_MANAGED_ENVIRONMENT": "01234567-89ab-cdef-abcd-ef0123456789",
+        "DT_API_ENDPOINT_URL": "https://abc123.dynatrace-managed.example.com:9999",
+        "DT_DYNATRACE_URL": "https://dmz123.dynatrace-managed.example.com",
+        "DT_MANAGED_API_TOKEN": "dt0s16.SAMPLE.abcd1234",
         "DT_MCP_DISABLE_TELEMETRY": "true",
         "LOG_LEVEL": "debug"
       }
@@ -143,6 +145,10 @@ You can then use that locally, for example with the following in your `mcp.json`
         "-e",
         "DT_MANAGED_ENVIRONMENT",
         "-e",
+        "DT_API_ENDPOINT_URL",
+        "-e",
+        "DT_DYNATRACE_URL",
+        "-e",
         "DT_MANAGED_API_TOKEN",
         "-e",
         "DT_MCP_DISABLE_TELEMETRY",
@@ -151,8 +157,10 @@ You can then use that locally, for example with the following in your `mcp.json`
         "mcp/dynatrace-managed-mcp-server:snapshot"
       ],
       "env": {
-        "DT_MANAGED_ENVIRONMENT": "https://yourdomain.com:9999/e/01234546-789a-bcde-f012-3456789abcde",
-        "DT_MANAGED_API_TOKEN": "dt0123.ABCDEFGHIJKLMNOPQRSTUVWX.YZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOP",
+        "DT_MANAGED_ENVIRONMENT": "01234567-89ab-cdef-abcd-ef0123456789",
+        "DT_API_ENDPOINT_URL": "https://abc123.dynatrace-managed.example.com:9999",
+        "DT_DYNATRACE_URL": "https://dmz123.dynatrace-managed.example.com",
+        "DT_MANAGED_API_TOKEN": "dt0s16.SAMPLE.abcd1234"
         "DT_MCP_DISABLE_TELEMETRY": "true",
         "LOG_LEVEL": "debug"
       },

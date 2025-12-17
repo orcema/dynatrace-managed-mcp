@@ -20,8 +20,20 @@
       "environmentVariables": [
         {
           "name": "DT_MANAGED_ENVIRONMENT",
-          "description": "The URL of your Dynatrace Managed environment (e.g. 'https://managed.company.com:9999/e/12345678-901b-cdef-1234-567890abcdef')",
+          "description": "id of the managed environment, used for constructing URL for API and dashboards (e.g. of the form `01234567-89ab-cdef-abcd-ef0123456789`)",
           "isRequired": true,
+          "format": "string"
+        },
+        {
+          "name": "DT_API_ENDPOINT_URL",
+          "description": "base url for Dynatrace Managed API, to which the environment id will be appended (e.g. `https://abc123.dynatrace-managed.com:9999`)",
+          "isRequired": true,
+          "format": "string"
+        },
+        {
+          "name": "DT_DYNATRACE_URL",
+          "description": "base url for Dynatrace Managed dashboard, to which the environment id will be appended (e.g. `https://dmz123.dynatrace-managed.com`)",
+          "isRequired": false,
           "format": "string"
         },
         {

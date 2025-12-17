@@ -26,7 +26,7 @@ import { logger } from '../../src/utils/logger';
 config();
 
 let skip = false;
-if (!process.env.DT_MANAGED_ENVIRONMENT || !process.env.DT_MANAGED_API_TOKEN) {
+if (!process.env.DT_MANAGED_ENVIRONMENT || !process.env.DT_API_ENDPOINT_URL || !process.env.DT_MANAGED_API_TOKEN) {
   console.log('Skipping integration tests - environment not configured');
   skip = true;
 }
@@ -43,7 +43,12 @@ if (!process.env.DT_MANAGED_ENVIRONMENT || !process.env.DT_MANAGED_API_TOKEN) {
 
   beforeAll(() => {
     const config = getManagedEnvironmentConfig();
-    authClient = new ManagedAuthClient(config.environment, config.apiToken);
+
+    authClient = new ManagedAuthClient({
+      apiBaseUrl: config.apiUrl,
+      dashboardBaseUrl: config.dashboardUrl,
+      apiToken: config.apiToken,
+    });
     metricsClient = new MetricsApiClient(authClient);
     logsClient = new LogsApiClient(authClient);
     eventsClient = new EventsApiClient(authClient);
@@ -412,7 +417,11 @@ if (!process.env.DT_MANAGED_ENVIRONMENT || !process.env.DT_MANAGED_API_TOKEN) {
 
     it('should handle 401 Unauthorized errors correctly', async () => {
       // Create client with invalid token
-      const invalidAuthClient = new ManagedAuthClient(authClient['baseUrl'], 'invalid-token');
+      const invalidAuthClient = new ManagedAuthClient({
+        apiBaseUrl: authClient.apiBaseUrl,
+        dashboardBaseUrl: authClient.dashboardBaseUrl,
+        apiToken: 'my-invalid-token',
+      });
       const invalidMetricsClient = new MetricsApiClient(invalidAuthClient);
 
       try {
