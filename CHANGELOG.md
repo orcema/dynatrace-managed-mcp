@@ -2,7 +2,6 @@
 
 ## Unreleased Changes
 
-
 ## 0.2.0
 
 - Updated server.json schema to 11.12.2025
