@@ -200,23 +200,32 @@ Never run queries that could return very large amounts of data, or that could be
     }
     logger.info(`Called validateConnection`);
 
-    const clusterVersion = await authClient.getClusterVersion();
-    logger.info(`Connected to Managed cluster version ${clusterVersion.version}`);
+    // Try to get cluster version, but don't fail if it doesn't exist (e.g., Playground/Classic APIs)
+    try {
+      const clusterVersion = await authClient.getClusterVersion();
+      logger.info(`Connected to Managed cluster version ${clusterVersion.version}`);
 
-    const isValidVersion = authClient.validateMinimumVersion(clusterVersion);
-    if (!isValidVersion) {
-      logger.info(
-        `Warning: Cluster version ${clusterVersion.version} may not support all features. Minimum recommended version is${authClient.MINIMUM_VERSION}`,
-      );
+      const isValidVersion = authClient.validateMinimumVersion(clusterVersion);
+      if (!isValidVersion) {
+        logger.info(
+          `Warning: Cluster version ${clusterVersion.version} may not support all features. Minimum recommended version is${authClient.MINIMUM_VERSION}`,
+        );
+      }
+    } catch (versionError: any) {
+      // Cluster version endpoint may not exist for Playground/Classic APIs
+      logger.warn(`Could not get cluster version (this is normal for Playground/Classic APIs): ${versionError.message}`);
+      logger.info('Continuing with connection validation only...');
     }
   } catch (error: any) {
     logger.error(`Failed to connect to Managed cluster ${apiUrl}: ${error.message}`);
     logger.error('Please verify:');
-    logger.error('1. DT_MANAGED_ENVIRONMENT URL is correct');
+    logger.error('1. DT_ENVIRONMENT or DT_MANAGED_ENVIRONMENT URL is correct');
     logger.error(`2. DT_MANAGED_API_TOKEN has required scopes: ${MANAGED_API_SCOPES.join(', ')}`);
     logger.error('3. Network connectivity to the Managed cluster');
+    logger.warn('Server will continue to start, but tools may fail if connection is invalid');
 
-    process.exit(2);
+    // Don't exit - let the server start and let tools fail if connection is invalid
+    // This allows the MCP server to initialize properly even if validation fails
   }
 
   // Ready to start the server
